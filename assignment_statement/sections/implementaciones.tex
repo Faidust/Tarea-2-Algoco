@@ -1,0 +1,79 @@
+% Subsección: Implementaciones
+% Detallar los programas a implementar, la estructura de archivos,
+% mediciones, generación de gráficos y documentación.
+
+\begin{mdframed}[linecolor=blue!60!black, backgroundcolor=blue!5,
+                 linewidth=1pt, roundcorner=5pt, innertopmargin=8pt,
+                 innerbottommargin=8pt]
+\textbf{Nota: }Abra este documento en algún lector de pdf que permita hipervínculos, ya que en este documento el texto en color azul suele indicar un hipervínculo.
+\end{mdframed}
+
+\begin{enumerate}[(1)]
+  \item En caso de dudas, enviar preguntas \textbf{al foro de la Tarea \tnum}. En caso de cualquier modificación, se informará oportunamente por aula.
+  \item Todo lo necesario para realizar la tarea se encuentra en el archivo \verb|.zip| proporcionado a través de aula.usm.cl.
+\end{enumerate}
+
+\begin{mdframed}[linecolor=blue!60!black, backgroundcolor=blue!5,
+                 linewidth=1pt, roundcorner=5pt, innertopmargin=8pt,
+                 innerbottommargin=8pt]
+                 \textbf{Nota:} La estructura de archivos y el template del proyecto se encuentran disponibles en el material entregado.
+\end{mdframed}
+
+\newpage
+
+\begin{enumerate}[(1)]
+  \item \textbf{Algoritmos.} Implementar en C++ \textbf{exactamente una solución por paradigma} para el problema definido en la \hyperref[sec:problema]{«Definición del problema»}. Cada implementación debe retornar el \textbf{puntaje} del camino encontrado, el \textbf{camino} en sí (secuencia de movimientos \texttt{R} y \texttt{D}) y las \textbf{vidas restantes} al llegar a $(N,M)$, o bien indicar que no encontró un camino válido (\texttt{SIN SOLUCION}).
+
+  \textbf{Fuerza bruta.} Enumerar exhaustivamente todos los caminos desde $(1,1)$ hasta $(N,M)$, calcular el puntaje de cada camino válido y retornar el de mayor puntaje. Se permite descartar un camino en cuanto se vuelva inválido (pisa una muralla o se queda sin vidas), pero no se permiten otras podas (por ejemplo, cotas sobre el puntaje acumulado) ni memorización: el objetivo es medir el costo computacional de la búsqueda exhaustiva pura.
+
+  \textbf{Programación dinámica.} Calcular el camino válido de mayor puntaje aprovechando la subestructura óptima del problema, considerando las vidas restantes como parte fundamental del estado. Puede implementarse de forma \emph{top-down} (memorización) o \emph{bottom-up} (tabulación), y se debe reconstruir la trayectoria óptima a partir de la información almacenada.
+
+  \textbf{Greedy.} Construir un camino aplicando en cada paso el protocolo local establecido en la \hyperref[subsec:regla-greedy]{«Regla greedy»} de este enunciado.
+
+  Estructura de archivos requerida:
+  \begin{itemize}
+    \item \path{code/grid_pathfinding/algorithms/brute_force.cpp}
+    \item \path{code/grid_pathfinding/algorithms/dynamic_programming.cpp}
+    \item \path{code/grid_pathfinding/algorithms/greedy.cpp}
+  \end{itemize}
+  Las soluciones de \textsc{fuerza bruta} y \textsc{programación dinámica} deben coincidir en el puntaje para todas las instancias en que ambas sean ejecutadas; verifique esto rigurosamente en su programa principal.
+
+  \item \textbf{Mediciones de tiempo, memoria y calidad.} Implementar el programa principal en C++ y su respectivo \path{makefile} para ejecutar sistemáticamente los tres algoritmos sobre el conjunto de casos de prueba (ver \hyperref[sec:casos-prueba]{«Casos de prueba»}).
+  
+  Los resultados de las mediciones deben almacenarse en archivos de texto dentro del directorio:
+  \begin{itemize}
+    \item \path{code/grid_pathfinding/data/measurements/}
+  \end{itemize}
+  
+  Además del tiempo de ejecución y el consumo de memoria, para cada instancia se debe registrar el \textbf{puntaje} obtenido por cada algoritmo (o el indicador de falla), con el objetivo de evaluar la calidad de la solución greedy respecto al óptimo mediante:
+  \begin{itemize}
+    \item la \textbf{brecha} $\Delta = s(C^{*}) - s(C_{\text{greedy}}) \geq 0$, en los casos en que greedy encuentra un camino válido, y
+    \item la \textbf{tasa de falla}, correspondiente a la proporción de casos en que greedy no logra alcanzar la meta.
+  \end{itemize}
+  Como los valores del terreno pueden ser negativos o cero, no se utiliza una razón porcentual como $s(C_{\text{greedy}}) / s(C^{*})$.
+
+  Archivos a entregar:
+  \begin{itemize}
+    \item \path{code/grid_pathfinding/grid_pathfinding.cpp}
+    \item \path{code/grid_pathfinding/makefile}
+  \end{itemize}
+  Dado su costo factorial/exponencial, el algoritmo de \textsc{fuerza bruta} solo debe ejecutarse en instancias con $N + M \leq 32$.
+
+  \item \textbf{Generación de gráficos.} Implementar el programa en \textsc{python} encargado de leer las mediciones guardadas en el directorio de resultados, procesar los datos y generar los gráficos comparativos correspondientes (tiempo de ejecución vs tamaño, uso de memoria, brecha $\Delta$ y tasa de falla de greedy).
+  
+  Las figuras generadas deben guardarse en formato PNG dentro del directorio:
+  \begin{itemize}
+    \item \path{code/grid_pathfinding/data/plots/}
+  \end{itemize}
+
+  Ubicación del script:
+  \begin{itemize}
+    \item \path{code/grid_pathfinding/scripts/plot_generator.py}
+  \end{itemize}
+
+  \item \textbf{Documentación.} Documentar cada uno de los pasos anteriores:
+  \begin{itemize}
+    \item Completar el archivo \path{README.md} del directorio \path{code/}.
+    \item Documentar al inicio de cada archivo fuente las referencias bibliográficas, fuentes de consulta y decisiones de diseño adoptadas en la implementación de cada algoritmo.
+  \end{itemize}
+\end{enumerate}

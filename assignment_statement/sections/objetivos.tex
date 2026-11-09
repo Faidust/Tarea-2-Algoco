@@ -1,0 +1,13 @@
+% Sección: Objetivos
+% Describir el objetivo general de la tarea y el desafío principal.
+
+Año 2026. En el marco de una ambiciosa misión de exploración planetaria desarrollada en la Universidad Técnica Federico Santa María, el vehículo explorador autónomo \emph{Sansano-1} ha sido desplegado sobre una región hostil e inexplorada. El objetivo del rover es atravesar un sector cuadriculado desde su punto de inserción hasta la base de extracción, recolectando la mayor cantidad posible de información científica y recursos valiosos, mientras sortea formaciones rocosas impenetrables y antiguos campos minados que amenazan la integridad de su blindaje.
+
+Desde el punto de vista computacional, el desafío consiste en resolver una variante enriquecida del problema de \emph{grid pathfinding}: encontrar un camino en una grilla de $N \times M$ con murallas y minas que \textbf{maximice el puntaje} recolectado sin agotar las vidas disponibles. Para abordar este problema, se propone realizar un estudio experimental comparativo entre tres \textbf{paradigmas fundamentales de diseño de algoritmos}:
+\begin{itemize}
+  \item \textsc{Fuerza bruta}: búsqueda exhaustiva de todas las trayectorias posibles.
+  \item \textsc{Programación dinámica}: optimización exacta explotando la subestructura óptima y superposición de subproblemas.
+  \item \textsc{Greedy} (Voraz): heurística de decisión local inmediata basada en la mejor opción visible en cada paso.
+\end{itemize}
+
+El desafío de esta tarea no radica en la dificultad teórica de diseñar los algoritmos, sino en \textbf{estudiar rigurosamente su comportamiento en la práctica}: analizar las curvas de tiempo de ejecución y consumo de memoria empíricos frente a las cotas asintóticas teóricas, y \textbf{cuantificar el costo de la miopía del algoritmo greedy} evaluando su brecha respecto a la solución óptima y su tasa de falla ante terrenos adversos.

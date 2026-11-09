@@ -1,0 +1,56 @@
+% Apéndice: Casos de prueba
+% Formato de entrada/salida y scripts generadores de los casos de prueba.
+
+\subsection{Camino de máximo puntaje en una grilla con murallas y minas}
+
+\textbf{Entrada:} Leer una grilla $G$ desde el archivo \verb|{n}_{m}_{t}_{d}_{s}.txt|, con el siguiente formato:
+\begin{itemize}
+  \item La primera línea contiene cuatro enteros \texttt{N M V P}: número de filas, número de columnas, vidas iniciales y puntaje que se pierde al pisar una mina, respectivamente.
+  \item Las siguientes $N$ líneas contienen $M$ enteros separados por espacio, correspondientes a los \textbf{identificadores de tipo} $t_{i,j}$ de cada celda: \texttt{1} celda normal, \texttt{0} muralla y \texttt{-1} mina.
+  \item Las siguientes $N$ líneas contienen $M$ enteros separados por espacio, correspondientes a los \textbf{valores} $g_{i,j}$ de cada celda. En las murallas y minas el valor se escribe como \texttt{0} y se ignora.
+\end{itemize}
+
+Los parámetros de los casos de prueba son:
+\begin{itemize}
+  \item $n$ y $m$ hacen referencia al número de filas $N$ y de columnas $M$ de la grilla, con $N \in \{2^2, 2^3, 2^4, 2^6, 2^8, 2^{10}\}$ y $M \in \{N, 2N\}$. El algoritmo de \textsc{fuerza bruta} solo se ejecuta cuando $N + M \leq 32$.
+  \item $t$ hace referencia al tipo de grilla, y pertenece al conjunto $T = \{\text{libre}, \text{murallas}, \text{minas}, \text{mixta}\}$. Sea $K = \lfloor \sqrt{N \cdot M} \rfloor$:
+  \begin{itemize}
+    \item \emph{libre}: todas las celdas son normales.
+    \item \emph{murallas}: se ubican $K$ murallas en posiciones aleatorias.
+    \item \emph{minas}: se ubican $K$ minas en posiciones aleatorias.
+    \item \emph{mixta}: se ubican $K$ murallas y $K$ minas en posiciones aleatorias.
+  \end{itemize}
+  \item $d$ hace referencia al dominio de los valores de las celdas normales, $d = \{D10, D1000\}$, donde $D10$ implica que el dominio es $\{-10, -9, \dots, 9, 10\}$ y $D1000$ que el dominio es $\{-1000, -999, \dots, 999, 1000\}$. La penalización por mina es $P = 10$ y $P = 1000$, respectivamente.
+  \item $s$ hace referencia a la muestra aleatoria (o caso de prueba) y pertenece al conjunto $S = \{a, b, c\}$.
+\end{itemize}
+
+En todos los casos de prueba se usa $V = 3$. El generador garantiza que las celdas $(1,1)$ y $(N,M)$ son normales y que existe al menos un camino válido; aun así, el algoritmo greedy puede fallar.
+
+\textbf{Salida:} Para cada algoritmo $a \in \{\text{bruteforce}, \text{dp}, \text{greedy}\}$, escribir en el archivo:
+
+\verb|{n}_{m}_{t}_{d}_{s}_{a}_out.txt|
+
+
+\begin{itemize}
+  \item en la primera línea, el puntaje del camino encontrado;
+  \item en la segunda línea, la secuencia de $N+M-2$ movimientos (\texttt{R} o \texttt{D}) que lo describe;
+  \item en la tercera línea, las vidas restantes al llegar a $(N,M)$.
+\end{itemize}
+Si el algoritmo no encuentra un camino válido, el archivo debe contener únicamente la línea \texttt{SIN SOLUCION}. Por ejemplo, para la grilla de la \Cref{fig:ejemplo-grilla}, la salida del algoritmo de programación dinámica sería:
+
+\begin{center}
+  \begin{tabular}{|l|}
+    \hline
+    \texttt{29} \\
+    \texttt{RRRRDDD} \\
+    \texttt{1} \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Directorios de datos y scripts asociados:
+\begin{itemize}
+  \item Instancias de entrada: \path{code/grid_pathfinding/data/grid_input/}
+  \item Salidas generadas: \path{code/grid_pathfinding/data/grid_output/}
+  \item Script generador de grillas: \path{code/grid_pathfinding/scripts/grid_generator.py}
+\end{itemize}

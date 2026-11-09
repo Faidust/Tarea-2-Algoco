@@ -1,0 +1,85 @@
+% Enunciado de la Tarea -- archivo principal.
+% Este archivo solo define los datos del enunciado, el formato de página
+% y llama a cada una de las partes ubicadas en el directorio sections/.
+% Compilar desde el directorio assignment_statement/.
+\documentclass[11pt,spanish]{article}
+
+\input{preamble.tex}
+
+% --- Datos del enunciado ---
+\newcommand{\tnum}{2}                           % Número de la tarea
+\newcommand{\sem}{2026-2}                       % Semestre
+%\newcommand{\campus}{Casa Central \\ Valparaíso}
+\newcommand{\deadline}{23 de noviembre de 2026} % TODO: fecha límite de entrega
+\newcommand{\subtitulo}{Más allá de la notación asintótica: Fuerza bruta, programación dinámica y algoritmos greedy en grid pathfinding con murallas y minas.}
+
+% --- Encabezado y pie de página ---
+\headheight=14pt
+\linespread{1.3}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{INF-221 TAREA \tnum}
+\rhead{\sem}
+%\fancyfoot[L]{Campus \campus}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{ALGORITMOS Y COMPLEJIDAD \sem}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{%
+  \huge
+  \textbf{ENUNCIADO TAREA \tnum~ \\ ALGORITMOS Y COMPLEJIDAD} \\[1ex]
+  \emph{\textquote{\subtitulo}}
+}
+
+\author{%
+  Fecha límite de entrega: \deadline \\[1ex]
+  Equipo ALGORITMOS Y COMPLEJIDAD \sem
+}
+
+\date{%
+  \small
+  \today \\
+  \currenttime \\[1ex]
+  Versión 0.0
+}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+\vspace{-1.0\baselineskip}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Objetivos}
+\input{sections/objetivos}
+
+\section{Definición del problema}\label{sec:problema}
+\input{sections/problema}
+
+\section{Especificaciones}
+\input{sections/especificaciones}
+
+\subsection{Implementaciones}\label{subsec:implementaciones}
+\input{sections/implementaciones}
+
+\newpage
+
+\subsection{Mini-informe}\label{subsec:mini-informe}
+\input{sections/mini_informe}
+
+\section{Condiciones de entrega}
+\input{sections/condiciones_entrega}
+
+\newpage
+
+\appendix
+
+\section{Casos de prueba}\label{sec:casos-prueba}
+\input{sections/casos_prueba}
+
+\end{document}
