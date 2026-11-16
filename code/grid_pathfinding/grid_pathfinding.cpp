@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include <sys/resource.h>  // getrusage (Linux/WSL)
+#include <sys/resource.h>  
 #include <vector>
 #include "path_result.h"
 
