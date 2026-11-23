@@ -203,6 +203,45 @@ def graficar_fallas(datos):
     guardar("fallas_greedy.png")
 
 
+def graficar_exito(datos):
+    plt.figure(figsize=(9, 5.5))
+
+    posiciones = list(range(len(TIPOS)))
+
+    for algoritmo, desplazamiento in [
+        ("greedy", -0.2),
+        ("dp", 0.2)
+    ]:
+        sub = datos[datos["algoritmo"] == algoritmo]
+
+        # Calcular porcentaje de soluciones encontradas.
+        tasas = sub.groupby("tipo")[
+            "encontro_solucion"
+        ].mean() * 100
+
+        porcentajes = [
+            tasas.get(tipo, 0)
+            for tipo in TIPOS
+        ]
+
+        plt.bar(
+            [x + desplazamiento for x in posiciones],
+            porcentajes,
+            width=0.38,
+            label=algoritmo
+        )
+
+    plt.xticks(posiciones, TIPOS)
+    plt.ylim(0, 110)
+    plt.title("Tasa de exito: Greedy vs DP")
+    plt.xlabel("Tipo de grilla")
+    plt.ylabel("Instancias con solucion encontrada (%)")
+    plt.legend()
+
+    guardar("exito_greedy_dp.png")
+
+
+
 def main():
     SALIDA.mkdir(parents=True, exist_ok=True)
 
@@ -212,6 +251,7 @@ def main():
     graficar_memoria(datos)
     graficar_brecha(datos)
     graficar_fallas(datos)
+    graficar_exito(datos)
 
     print("Graficos generados correctamente")
 

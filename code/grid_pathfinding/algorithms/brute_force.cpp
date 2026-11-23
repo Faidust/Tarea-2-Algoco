@@ -1,85 +1,67 @@
 #include "../path_result.h"
 #include <vector>
 #include <string>
-#include <functional>
+#include <algorithm>
 
 using namespace std;
 
-// Fuerza bruta mediante recursion y backtracking.
-// Se exploran todos los caminos validos sin optimizaciones.
-// Referencia: Enunciado Tarea 2 INF-221.
-
-PathResult solveBruteForce(int n, int m, int v, int p,
-                          const vector<vector<int>>& types,
-                          const vector<vector<long long>>& values) {
-
+PathResult solveBruteForce(
+    int n, int m, int v, int p,
+    const vector<vector<int>>& types,
+    const vector<vector<long long>>& values
+) {
     PathResult mejor = {false, 0, "", 0};
 
-    if (n <= 0 || m <= 0 || v <= 0) {
-        return mejor;
-    }
+    // Crear la primera secuencia de movimientos.
+    string camino(n - 1, 'D');
+    camino += string(m - 1, 'R');
 
-    string camino;
+    // Generar todas las permutaciones posibles.
+    do {
+        int i = 0;
+        int j = 0;
+        int vidas = v;
+        long long puntaje = values[0][0];
+        bool valido = true;
 
-    // Funcion recursiva para explorar los caminos
-    function<void(int, int, int, long long)> explorar =
-        [&](int fila, int columna, int vidas, long long puntaje) {
+        // Evaluar la secuencia actual.
+        for (char movimiento : camino) {
 
-        // Caso base: llegamos al destino
-        if (fila == n - 1 && columna == m - 1) {
-
-            if (!mejor.found || puntaje > mejor.score) {
-                mejor = {true, puntaje, camino, vidas};
+            if (movimiento == 'R') {
+                j++;
+            } else {
+                i++;
             }
 
-            return;
-        }
+            // Verificar si encontramos una muralla.
+            if (types[i][j] == 0) {
+                valido = false;
+                break;
+            }
 
-        // Explorar movimiento hacia la derecha
-        if (columna + 1 < m) {
+            // Verificar si encontramos una mina.
+            if (types[i][j] == -1) {
+                vidas--;
+                puntaje -= p;
 
-            int tipo = types[fila][columna + 1];
-
-            if (tipo != 0 && !(tipo == -1 && vidas == 1)) {
-
-                camino.push_back('R');
-
-                if (tipo == -1) {
-                    explorar(fila, columna + 1, vidas - 1,
-                             puntaje - p);
-                } else {
-                    explorar(fila, columna + 1, vidas,
-                             puntaje + values[fila][columna + 1]);
+                if (vidas <= 0) {
+                    valido = false;
+                    break;
                 }
-
-                camino.pop_back();
+            } else {
+                puntaje += values[i][j];
             }
         }
 
-        // Explorar movimiento hacia abajo
-        if (fila + 1 < n) {
-
-            int tipo = types[fila + 1][columna];
-
-            if (tipo != 0 && !(tipo == -1 && vidas == 1)) {
-
-                camino.push_back('D');
-
-                if (tipo == -1) {
-                    explorar(fila + 1, columna, vidas - 1,
-                             puntaje - p);
-                } else {
-                    explorar(fila + 1, columna, vidas,
-                             puntaje + values[fila + 1][columna]);
-                }
-
-                camino.pop_back();
-            }
+        // Guardar el mejor camino valido.
+        if (valido && (!mejor.found || puntaje > mejor.score)) {
+            mejor.found = true;
+            mejor.score = puntaje;
+            mejor.path = camino;
+            mejor.remaining_lives = vidas;
         }
-    };
 
-    // Comenzar desde la esquina superior izquierda
-    explorar(0, 0, v, values[0][0]);
+    } while (next_permutation(camino.begin(), camino.end()));
 
     return mejor;
 }
