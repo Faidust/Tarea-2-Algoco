@@ -1,12 +1,15 @@
+/*
+ * Algoritmo Greedy.
+ * En cada paso se selecciona el movimiento valido que entrega
+ * el mayor puntaje inmediato, priorizando la derecha en caso de empate.
+ * No se consideran los movimientos futuros, por lo que no se garantiza
+ * encontrar el camino optimo ni una solucion cuando esta existe.
+ */
 #include "../path_result.h"
 #include <vector>
 #include <string>
 
 using namespace std;
-
-// Implementacion de la regla Greedy del enunciado.
-// En cada paso elige la celda de mayor ganancia inmediata.
-// En caso de empate, prioriza el movimiento hacia la derecha.
 
 PathResult solveGreedy(int n, int m, int v, int p,
                        const vector<vector<int>>& types,

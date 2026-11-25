@@ -1,3 +1,0 @@
--512
-RRDDDRRRRR
-2

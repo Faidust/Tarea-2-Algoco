@@ -1,3 +1,10 @@
+/*
+ * Algoritmo de Programacion Dinamica.
+ * Se utiliza un enfoque bottom-up, donde cada estado considera
+ * la posicion actual y la cantidad de vidas restantes.
+ * Se almacenan los mejores puntajes para evitar recalcular estados
+ * y los movimientos anteriores para reconstruir el camino optimo.
+ */
 #include "../path_result.h"
 #include <vector>
 #include <string>
@@ -6,10 +13,6 @@
 #include <cstddef>
 
 using namespace std;
-
-// Programacion dinamica bottom-up.
-// El estado considera la posicion y las vidas restantes.
-// Se guarda tambien el movimiento anterior para reconstruir el camino.
 
 PathResult solveDP(int n, int m, int v, int p,
                    const vector<vector<int>>& types,

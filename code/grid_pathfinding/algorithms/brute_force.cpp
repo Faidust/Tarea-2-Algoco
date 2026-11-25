@@ -1,3 +1,11 @@
+/*
+ * Algoritmo de Fuerza Bruta.
+ * Se utiliza next_permutation para generar todas las secuencias
+ * posibles de movimientos hacia la derecha y hacia abajo.
+ * Cada secuencia se evalua para comprobar si es valida y se
+ * almacena el camino con mayor puntaje encontrado.
+ * No se utiliza poda ni memorizacion de resultados.
+ */
 #include "../path_result.h"
 #include <vector>
 #include <string>
